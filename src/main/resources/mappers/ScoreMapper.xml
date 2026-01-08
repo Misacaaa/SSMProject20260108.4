@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.hbvtc.mapper.ScoreMapper">
+    <select id="selectAllScoresWithDetails" resultType="cn.edu.hbvtc.entity.ScoreDTO">
+        SELECT
+            s.id,
+            s.student_id AS studentId,
+            s.course_id AS courseId,
+            s.score,
+            s.exam_date AS examDate,
+            st.name AS studentName,
+            c.course_name AS courseName
+        FROM score s
+        LEFT JOIN student st ON s.student_id = st.student_id
+        LEFT JOIN course c ON s.course_id = c.course_id
+    </select>
+
+</mapper>

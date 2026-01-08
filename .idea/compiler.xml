@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="SSMProject20260105.3" />
+        <module name="SSMProject20260107.1" />
+        <module name="SSMProject20260105.2" />
+        <module name="SSMProject20260106.1" />
+        <module name="SSMProject20260106.3" />
+        <module name="SSMProject20260108.1" />
+        <module name="SSMProject20260106.5" />
+        <module name="SSMProject20260108.3" />
+        <module name="SSM20251226" />
+        <module name="SSMProject20251230.3" />
+        <module name="SSMProject20251230.2" />
+        <module name="SSMProject20260105.1" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
