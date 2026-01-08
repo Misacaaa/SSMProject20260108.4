@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.hbvtc.mapper.StudentMapper">
+
+    <!-- 定义结果映射 -->
+    <resultMap id="StudentResultMap" type="cn.edu.hbvtc.entity.Student">
+        <id property="studentId" column="student_id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="birthDate" column="birth_date"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <!-- 查询所有学生 -->
+    <select id="selectAllStudents" resultMap="StudentResultMap">
+        SELECT
+            student_id,
+            name,
+            gender,
+            birth_date,
+            phone,
+            email
+        FROM student
+        ORDER BY student_id
+    </select>
+    <!-- 方法1：countByStudentId -->
+    <select id="countByStudentId" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM student
+        WHERE student_id = #{studentId}
+    </select>
+
+    <!-- 方法2：insertStudent -->
+    <insert id="insertStudent" parameterType="cn.edu.hbvtc.entity.Student">
+        INSERT INTO student (
+            student_id,
+            name,
+            gender,
+            birth_date,
+            phone,
+            email
+        ) VALUES (
+            #{studentId},
+            #{name},
+            #{gender},
+            #{birthDate},
+            #{phone},
+            #{email}
+        )
+    </insert>
+
+    <select id="selectByStudentId" resultType="cn.edu.hbvtc.entity.Student" parameterType="string">
+        SELECT student_id AS studentId,
+               name,
+               gender,
+               birth_date AS birthDate,
+               phone,
+               email
+        FROM student
+        WHERE student_id = #{studentId}
+    </select>
+
+    <!-- ✅ 删除方法 -->
+    <delete id="deleteStudentById" parameterType="string">
+        DELETE FROM student
+        WHERE student_id = #{studentId}
+    </delete>
+
+    <select id="selectById" parameterType="string" resultType="cn.edu.hbvtc.entity.Student">
+        SELECT
+            student_id AS studentId,
+            name,
+            gender,
+            birth_date AS birthDate,
+            phone,
+            email
+        FROM student
+        WHERE student_id = #{studentId}
+    </select>
+    <update id="updateStudent" parameterType="cn.edu.hbvtc.entity.Student">
+        UPDATE student
+        SET
+        name = #{name},
+        gender = #{gender},
+        birth_date = #{birthDate}, <!-- MyBatis 会自动转为 DATE -->
+        phone = #{phone},
+        email = #{email}
+        WHERE student_id = #{studentId}
+    </update>
+
+    <!-- 查询学生列表（支持动态条件） -->
+    <select id="selectByConditions" resultType="cn.edu.hbvtc.entity.Student">
+        SELECT
+        student_id   AS studentId,
+        name,
+        gender,
+        birth_date   AS birthDate,
+        phone,
+        email
+        FROM student
+        <where>
+            <!-- 学号模糊查询（也可改为 = 精确匹配） -->
+            <if test="studentId != null and studentId != ''">
+                AND student_id LIKE CONCAT('%', #{studentId}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                AND email LIKE CONCAT('%', #{email}, '%')
+            </if>
+        </where>
+        ORDER BY student_id
+    </select>
+
+</mapper>
